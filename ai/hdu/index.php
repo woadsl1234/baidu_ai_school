@@ -1,5 +1,5 @@
 <?php
-require '../simple_html_dom.php';
+// require '../simple_html_dom.php';
 header('Content-type: text/html; charset=gb2312');
 function login_post($url, $cookie, $post)
 {
@@ -95,7 +95,7 @@ function get_lesson($content)
     $url5 = "http://jxgl.hdu.edu.cn/";
     preg_match_all('/<a href="(.*?)"/m', $content, $match);
     foreach ($match[1] as $i => $j) {
-        if (preg_match('/xskbcx/', $j))                                                      //学生课表查询 xskbcx
+        if (preg_match('/xskbcx/', $j))                                                      //????α??? xskbcx
         {
             echo "<br>";
             $url = $url5 . $j;
@@ -106,56 +106,47 @@ function get_lesson($content)
     // $html =new simple_html_dom();
     // $html -> load($content);
     // echo $html;
-    $lesson = array('日' => array(), '一' => array(), '二' => array(), '三' => array(), '四' => array(), '五' => array(), '六' => array());
+    $lesson = array('??' => array(), '?' => array(), '??' => array(), '??' => array(), '??' => array(), '??' => array(), '??' => array());
     // print_r($lesson); 
 
     preg_match_all("/<td.*?>(.*?)<\/td>/", $content, $match);
     // print_r($match[0]);
     /*
-    exp[0] 课程名称
-    exp[1] 课程时间
-    exp[2] 任课老师
-    exp[3] 上课地点
-    exp[4] 期末考试时间
-    exp[5] 期末考试地点
+    exp[0] ?γ?????
+    exp[1] ?γ????
+    exp[2] ?ο????
+    exp[3] ??ε??
+    exp[4] ??????????
+    exp[5] ?????????
      */
     foreach ($match[0] as $j => $k) {
         if (strlen($k) > 100) {
-            if (strrpos('日', $k)) {
+            if (strrpos('??', $k)) {
                 $exp = explode('<br>', $k);
-                array_push($lesson['日'], $exp);
-            } else if (strrpos($k, '一')) {
+                array_push($lesson['??'], $exp);
+            } else if (strrpos($k, '?')) {
                 $exp = explode('<br>', $k);
-                array_push($lesson['一'], $exp);
-            } else if (strrpos($k, '二')) {
+                array_push($lesson['?'], $exp);
+            } else if (strrpos($k, '??')) {
                 $exp = explode('<br>', $k);
-                array_push($lesson['二'], $exp);
-            } else if (strrpos($k, '三')) {
+                array_push($lesson['??'], $exp);
+            } else if (strrpos($k, '??')) {
                 $exp = explode('<br>', $k);
-                array_push($lesson['三'], $exp);
-            } else if (strrpos($k, '四')) {
+                array_push($lesson['??'], $exp);
+            } else if (strrpos($k, '??')) {
                 $exp = explode('<br>', $k);
-                array_push($lesson['四'], $exp);
-            } else if (strrpos($k, '五')) {
+                array_push($lesson['??'], $exp);
+            } else if (strrpos($k, '??')) {
                 $exp = explode('<br>', $k);
-                array_push($lesson['五'], $exp);
-            } else if (strrpos($k, '六')) {
+                array_push($lesson['??'], $exp);
+            } else if (strrpos($k, '??')) {
                 $exp = explode('<br>', $k);
-                array_push($lesson['六'], $exp);
+                array_push($lesson['??'], $exp);
             }
         }
     }
     return $lesson;
 }
-/**************************************************************
-*
-* 使用特定function对数组中所有元素做处理
-* @param string &$array 要处理的字符串
-* @param string $function 要执行的函数
-* @return boolean $apply_to_keys_also 是否也应用到key上
-* @access public
-*
-*************************************************************/
 function arrayRecursive(&$array, $function, $apply_to_keys_also = false)
 {
     static $recursive_counter = 0;
@@ -179,14 +170,7 @@ function arrayRecursive(&$array, $function, $apply_to_keys_also = false)
     }
     $recursive_counter--;
 }
-/**************************************************************
-*
-* 将数组转换为JSON字符串（兼容中文）
-* @param array $array 要转换的数组
-* @return string 转换得到的json字符串
-* @access public
-*
-*************************************************************/
+
 function JSON($array)
 {
     arrayRecursive($array, 'urlencode', true);
