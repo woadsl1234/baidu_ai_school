@@ -1,0 +1,29 @@
+{
+  "name": "kurisu/captcha_reader",
+  "description": "kurisu/captcha_reader",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "kurisu",
+      "email": "Kuri-su@users.noreply.github.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "symfony/var-dumper": "*"
+  },
+  "autoload": {
+    "classmap": [
+      "src/",
+      "training/"
+    ],
+    "psr-4": {
+      "App\\": "src/"
+    },
+    "files":[
+      "helpers.php"
+    ]
+
+  }
+}

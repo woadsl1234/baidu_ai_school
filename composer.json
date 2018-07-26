@@ -1,0 +1,5 @@
+{
+    "require": {
+        "kurisu/captcha_reader": "^1.0"
+    }
+}
