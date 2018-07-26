@@ -25,6 +25,7 @@
     curl_close($ch);
     return $rs;
     }
+
     $url = "http://jwgl1.hznu.edu.cn/CheckCode.aspx";
 
     $cookie = dirname(__FILE__) . '/jwglcookie.txt';
@@ -32,8 +33,6 @@
     $fp = fopen("checkcode.png","w");  
     fwrite($fp,$img);   
     fclose($fp);
-    $result = shell_exec("/usr/bin/python2.7 predict.py 2>&1");
-    print_r($result);
-    echo("ret is $ret");
+
     $url = 'http://jwgl1.hznu.edu.cn/default2.aspx';
 ?>
