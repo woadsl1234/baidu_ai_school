@@ -39,7 +39,7 @@ if(isset($_GET['cjcx'])){
                 $url = $url5 . $j;
             }
         }
-        $content = get_content_add_refer($url, $GLOBALS['jxglcookie'], $url);
+        $content = get_content($url, $GLOBALS['jxglcookie']);
         // echo $content;
         // $html =new simple_html_dom();
         // $html -> load($content);
@@ -98,13 +98,13 @@ function get_gress($content){
             }
         }
     // echo $url;
-    $content = get_content_add_refer($url, $GLOBALS['jxglcookie'], $url);
+    $content = get_content($url, $GLOBALS['jxglcookie']);
     // echo $content;
     $re = "/<td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td><td.*?>(.*?)<\/td>/";
     preg_match_all($re, $content, $match);
     // print_r($match);
     // print_r(JSON($match));
-    $grade = array('学年' => array(), '学期' => array(), '课程代码' => array(), '课程名称' => array(), '课程性质' => array(), '课程归属' => array(), '学分' => array(), '成绩' => array(), '补考成绩' => array(), '是否重修' => array(), '开课学院' => array(), '备注' => array(), '补考备注' => array());
+    $grades = array();
     /*
     $match[1]学年
     $match[2]学期
@@ -120,11 +120,8 @@ function get_gress($content){
     $match[12]备注
     $match[13]补考备注
     */
-    foreach($match as $i => $j){
-        $x = 1;
-        $j = 1;
-        
-    }
+    $grades = array_T($match);
+    print_r(JSON($grades));
 }
 get_gress($host);
 ?>
