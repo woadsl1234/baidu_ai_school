@@ -106,7 +106,7 @@
     preg_match_all('/<a href="(.*?)"/m', $content, $match);
     // var_dump($match);
     foreach ($match[1] as $i => $j) {
-        if (preg_match('/xskbcx/', $j))                                                      //学生课表
+        if (preg_match('/xskbcx/', $j))                                                      //???????
         {
             // echo "<br>";
             $url = $url5 . $j;
@@ -123,7 +123,7 @@
     // print_r($lesson); 
 
     preg_match_all("/<td.*?>(.*?)<\/td>/", $content, $match);
-    // print_r($match[0]);
+     // print_r($match[0]);
     /*
     exp[0] 课程名称
     exp[1] 上课时间

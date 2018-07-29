@@ -1,6 +1,6 @@
 <?php
     error_reporting(E_ALL);
-    require_once(__DIR__ . '../vendor/autoload.php');
+    require_once(__DIR__ . '/../vendor/autoload.php');
     use CAPTCHAReader\src\App\IndexController;
     
     function check(){
@@ -36,14 +36,26 @@
         }
         $recursive_counter--;
     }
-
+    function login_post($url,$cookie,$post){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);  
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie); 
+        curl_setopt($ch, CURLOPT_REFERER, $url); 
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));  
+        $result=curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
     function JSON($array)
     {
         arrayRecursive($array, 'urlencode', true);
         $json = json_encode($array);
         return urldecode($json);
     }
-    function login_post($url, $cookie, $post)
+    function hdu_login_post($url, $cookie, $post)
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -96,4 +108,47 @@
         curl_close($ch);
         return $rs;
     }
-    
+    function array_T($arr){
+        for($i=0; $i<count($arr); $i++) {
+            for($j=0; $j<count($arr[$i]);$j++)
+            {
+                $a[$j][$i] =$arr[$i][$j];
+            }
+        }
+        return $a;
+    }
+    function post_content($url, $cookie, $post){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);  //重要，抓取跳转后数据
+        curl_setopt($ch, CURLOPT_REFERER, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));  //post提交数据
+        $rs = curl_exec($ch);
+        curl_close($ch);
+        return $rs;
+    }
+    function get_image($url, $cookie){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+        $rs = curl_exec($ch);
+        curl_close($ch);
+        return $rs;
+    }
+
+    function VIEWSTATE_get($url, $cookie){
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_COOKIEJAR, $cookie);
+        $rs = curl_exec($curl);
+        curl_close($curl);
+        preg_match('<input type="hidden" name="__VIEWSTATE" value="(.*)" />', $rs, $match);
+        return $match[1];
+    }

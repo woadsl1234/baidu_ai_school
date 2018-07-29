@@ -1,8 +1,7 @@
 <?php
 // require '../simple_html_dom.php';
 header('Content-type: text/html; charset=gb2312');
-require '../config.php';
-require_once('../json.php');
+require_once('../config.php');
 
 $cascookie = dirname(__FILE__) . '/cascookie.txt';
 $jxglcookie = dirname(__FILE__) . '/jxglcookie.txt';
