@@ -18,7 +18,7 @@
             $this -> cascookie = dirname(__FILE__) . '/cascookie.txt';
             $this -> cookie = dirname(__FILE__) . '/cookie.txt';
             $this -> jxdccookie = dirname(__FILE__) . '/jxdccookie.txt';
-            echo $url;
+            // echo $url;
             if(!strcmp($school, '杭州电子科技大学'))
             {
                 $content = $this -> hdu_login($url, $username, $password);
@@ -27,25 +27,25 @@
             {
                 $content = $this -> simple_login($url, $username, $password);
             }
-            echo $content;
+            // echo $content;
             $this -> lesson = $this -> take_lesson($url, $content, $this -> cookie);
             $this -> grades = $this -> take_grades($url, $content, $this -> cookie);
             // $this -> kaoshi = $this -> take_kaoshi($url, $content, $this -> cookie, '2017-2018', '2');
 
-            print_r(JSON($this -> lesson));
+            // print_r(JSON($this -> lesson));
         }
         private function simple_login($url1, $username, $password){
             $url = $url1.'default2.aspx';
-            echo $url;
+            // echo $url;
             $viewstate = VIEWSTATE_get($url,$this->cookie);
-            echo $viewstate;
+            // echo $viewstate;
             $url = $url1.'CheckCode.aspx';
             $img = get_image($url,$this->cookie);
             $fp = fopen("checkcode.png","w");  
             fwrite($fp,$img);   
             fclose($fp);
             $res = check();
-            echo $res;
+            // echo $res;
             $url = $url1.'default2.aspx';
             $post=array(
                 '__VIEWSTATE'=>$viewstate,
@@ -59,7 +59,7 @@
                 'hidsc'=>''
             );
             $content = login_post($url, $this->cookie, $post);
-            print_r($content);
+            // print_r($content);
             return $content;
         }
         private function hdu_login($url, $username, $password){     //我杭电就是牛逼
@@ -133,7 +133,7 @@
             // print_r($url);
             $html = get_content($url, $this -> cookie);
             preg_match_all('/<input id="__VIEWSTATE" .*? value="(.*?)" >/m', $html, $vs);
-            print_r($vs);
+            // print_r($vs);
             // $state=$vs[1][0];  //$state存放一会post的__VIEWSTATE
             // print_r($state);
             $post=array(
@@ -144,7 +144,7 @@
                 'xqd'=>$xueqi,//若改为1则为第一学期成绩
                 'btn_xq'=>'%D1%A7%C6%DA%B3%C9%BC%A8'
              );
-            echo $html;
+            // echo $html;
         }
         private function take_lesson($url, $content, $cookie)
         {
@@ -217,11 +217,13 @@
         }
     }
     
-    // $x = new User('浙江农林大学', '201620020214', 'xlj123**');
-    $y = new User('杭州电子科技大学', '16184117', 'adsl1234');
-    // $z = new User('杭州师范大学', '2016210201104', 'Syt19970811');
-    // var_dump($x -> get_lesson());
-    // var_dump($x -> get_schools());
-    // print_r($x -> get_lesson());
-
+    if(isset($_POST['school'])&&isset($_POST['username'])&&isset($_POST['password']))
+    {
+        $y = new User($_POST['school'], $_POST['username'], $_POST['password']);
+        // $x = new User('浙江农林大学', '201620020214', 'xlj123**');
+        // $z = new User('杭州师范大学', '2016210201104', 'Syt19970811');
+        // var_dump($x -> get_lesson());
+        // var_dump($x -> get_schools());
+        // print_r($x -> get_lesson());
+    }
 ?>
